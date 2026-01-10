@@ -223,6 +223,48 @@
             transform: translateY(0);
         }
 
+        .direct-download-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin-left: 8px;
+        }
+
+        .direct-download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .lesson-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .lesson-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .lesson-buttons {
+                width: 100%;
+            }
+
+            .view-btn, .direct-download-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+        }
+
         .toggle-btn {
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
             color: white;
@@ -517,15 +559,24 @@
                 <div id="grade1-4" class="lesson-list">
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 1" data-en="Quarter 1 - Lesson 1">කාර්තුව 1 - පාඩම 1</span>
-                        <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade1-4', 'Q1-L1')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 2" data-en="Quarter 1 - Lesson 2">කාර්තුව 1 - පාඩම 2</span>
-                        <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade1-4', 'Q1-L2')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 3" data-en="Quarter 1 - Lesson 3">කාර්තුව 1 - පාඩම 3</span>
-                        <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade1-4', 'Q1-L3')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -537,15 +588,24 @@
                 <div id="grade5-7" class="lesson-list">
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 1" data-en="Quarter 1 - Lesson 1">කාර්තුව 1 - පාඩම 1</span>
-                        <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade5-7', 'Q1-L1')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 2" data-en="Quarter 1 - Lesson 2">කාර්තුව 1 - පාඩම 2</span>
-                        <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade5-7', 'Q1-L2')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 3" data-en="Quarter 1 - Lesson 3">කාර්තුව 1 - පාඩම 3</span>
-                        <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade5-7', 'Q1-L3')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -557,15 +617,24 @@
                 <div id="grade8-9" class="lesson-list">
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 1" data-en="Quarter 1 - Lesson 1">කාර්තුව 1 - පාඩම 1</span>
-                        <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade8-9', 'Q1-L1')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 2" data-en="Quarter 1 - Lesson 2">කාර්තුව 1 - පාඩම 2</span>
-                        <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade8-9', 'Q1-L2')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 3" data-en="Quarter 1 - Lesson 3">කාර්තුව 1 - පාඩම 3</span>
-                        <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade8-9', 'Q1-L3')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -708,6 +777,16 @@
                 link.download = currentPdfPath.split('/').pop();
                 link.click();
             }
+        }
+
+        function directDownload(grade, lesson) {
+            const pdfPath = `pdfs/${grade}/${lesson}.pdf`;
+            const link = document.createElement('a');
+            link.href = pdfPath;
+            link.download = `${grade}-${lesson}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function closeModal() {
