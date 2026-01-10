@@ -332,6 +332,7 @@
             padding: 25px;
             overflow: hidden;
             background: #f8f9fa;
+            position: relative;
         }
 
         .pdf-viewer iframe {
@@ -340,6 +341,65 @@
             border: none;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            border-radius: 12px;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e9ecef;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin-left: 15px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
         }
 
         .upload-section {
@@ -511,14 +571,65 @@
             </div>
         </div>
 
-       
+        <div class="upload-section">
+            <h3 data-si="📋 පිහිටුවීමේ උපදෙස්" data-en="📋 Setup Instructions">📋 පිහිටුවීමේ උපදෙස්</h3>
+            <div class="upload-info">
+                <div class="si-content">
+                    <strong>ඔබේ PDF ගොනු එක් කරන්නේ කෙසේද:</strong><br><br>
+                    1. ඔබේ ව්‍යාපෘති ඩිරෙක්ටරියේ <code>pdfs</code> නම් ෆෝල්ඩරයක් සාදන්න<br>
+                    2. <code>pdfs</code> ඇතුළත ෆෝල්ඩර තුනක් සාදන්න: <code>grade1-4</code>, <code>grade5-7</code>, සහ <code>grade8-9</code><br>
+                    3. ඔබේ PDF ගොනු සුදුසු ශ්‍රේණි ෆෝල්ඩරවල තබන්න<br>
+                    4. ඔබේ PDF වලට මෙසේ නම් කරන්න: <code>Q1-L1.pdf</code>, <code>Q1-L2.pdf</code>, ආදිය<br>
+                    5. HTML හි පාඩම් ශීර්ෂක ඔබේ සැබෑ පාඩම් වලට ගැලපෙන පරිදි යාවත්කාලීන කරන්න<br>
+                    6. සියල්ල ඔබේ GitHub ගබඩාවට තල්ලු කරන්න<br><br>
+                    <strong>ෆෝල්ඩර ව්‍යුහය උදාහරණය:</strong><br>
+                    - index.html<br>
+                    - pdfs/<br>
+                    &nbsp;&nbsp;- grade1-4/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L2.pdf<br>
+                    &nbsp;&nbsp;- grade5-7/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;- grade8-9/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf
+                </div>
+                <div class="en-content" style="display: none;">
+                    <strong>How to add your PDF files:</strong><br><br>
+                    1. Create a folder named <code>pdfs</code> in your project directory<br>
+                    2. Inside <code>pdfs</code>, create three folders: <code>grade1-4</code>, <code>grade5-7</code>, and <code>grade8-9</code><br>
+                    3. Place your PDF files in the appropriate grade folders<br>
+                    4. Name your PDFs like: <code>Q1-L1.pdf</code>, <code>Q1-L2.pdf</code>, etc.<br>
+                    5. Update the lesson titles in the HTML to match your actual lessons<br>
+                    6. Push everything to your GitHub repository<br><br>
+                    <strong>Folder structure example:</strong><br>
+                    - index.html<br>
+                    - pdfs/<br>
+                    &nbsp;&nbsp;- grade1-4/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L2.pdf<br>
+                    &nbsp;&nbsp;- grade5-7/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;- grade8-9/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="pdfModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle" data-si="පාඩම් නරඹන්නා" data-en="Lesson Viewer">පාඩම් නරඹන්නා</h3>
-                <button class="close-btn" onclick="closeModal()" data-si="වසන්න" data-en="Close">වසන්න</button>
+                <div>
+                    <button class="download-btn" id="downloadBtn" onclick="downloadPDF()" data-si="බාගත කරන්න" data-en="Download">බාගත කරන්න</button>
+                    <button class="close-btn" onclick="closeModal()" data-si="වසන්න" data-en="Close">වසන්න</button>
+                </div>
             </div>
             <div class="pdf-viewer">
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div class="spinner"></div>
+                    <div class="loading-text" data-si="පූරණය වෙමින්..." data-en="Loading...">පූරණය වෙමින්...</div>
+                </div>
                 <iframe id="pdfFrame" src=""></iframe>
             </div>
         </div>
@@ -526,6 +637,7 @@
 
     <script>
         let currentLang = 'si';
+        let currentPdfPath = '';
 
         function switchLanguage(lang) {
             currentLang = lang;
@@ -564,12 +676,23 @@
             const modal = document.getElementById('pdfModal');
             const iframe = document.getElementById('pdfFrame');
             const modalTitle = document.getElementById('modalTitle');
+            const loadingOverlay = document.getElementById('loadingOverlay');
             
             // Construct PDF path
-            const pdfPath = `pdfs/${grade}/${lesson}.pdf`;
+            currentPdfPath = `pdfs/${grade}/${lesson}.pdf`;
+            
+            // Show loading overlay
+            loadingOverlay.classList.remove('hidden');
             
             // Set iframe source
-            iframe.src = pdfPath;
+            iframe.src = currentPdfPath;
+            
+            // Hide loading when iframe loads
+            iframe.onload = function() {
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 500);
+            };
             
             // Set modal title
             modalTitle.textContent = `${grade.toUpperCase()} - ${lesson}`;
@@ -578,12 +701,24 @@
             modal.classList.add('active');
         }
 
+        function downloadPDF() {
+            if (currentPdfPath) {
+                const link = document.createElement('a');
+                link.href = currentPdfPath;
+                link.download = currentPdfPath.split('/').pop();
+                link.click();
+            }
+        }
+
         function closeModal() {
             const modal = document.getElementById('pdfModal');
             const iframe = document.getElementById('pdfFrame');
+            const loadingOverlay = document.getElementById('loadingOverlay');
             
             modal.classList.remove('active');
             iframe.src = '';
+            loadingOverlay.classList.remove('hidden');
+            currentPdfPath = '';
         }
 
         // Close modal when clicking outside
