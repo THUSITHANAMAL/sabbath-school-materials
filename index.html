@@ -17,30 +17,23 @@
             background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
+            animation: gradientShift 15s ease infinite;
         }
 
-        /* Disable heavy animations on mobile */
-        @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
-            }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            animation: fadeIn 0.8s ease;
         }
 
-        /* Remove animation on mobile for faster load */
-        @media (min-width: 769px) {
-            .container {
-                animation: fadeIn 0.8s ease;
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
@@ -140,13 +133,6 @@
             transition: left 0.5s;
         }
 
-        /* Disable shimmer effect on mobile */
-        @media (max-width: 768px) {
-            .card::before {
-                display: none;
-            }
-        }
-
         .card:hover::before {
             left: 100%;
         }
@@ -178,18 +164,12 @@
         .lesson-list {
             display: none;
             margin-top: 20px;
+            animation: slideDown 0.3s ease;
         }
 
-        /* Disable animation on mobile */
-        @media (min-width: 769px) {
-            .lesson-list {
-                animation: slideDown 0.3s ease;
-            }
-            
-            @keyframes slideDown {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .lesson-list.active {
@@ -517,8 +497,6 @@
 
             .card {
                 padding: 25px;
-                /* Simplify shadows on mobile */
-                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             }
 
             .modal-content {
@@ -534,32 +512,11 @@
 
             header {
                 padding: 25px 15px;
-                /* Reduce blur on mobile for better performance */
-                backdrop-filter: blur(10px);
             }
 
             .grade-cards {
                 grid-template-columns: 1fr;
                 gap: 20px;
-            }
-
-            /* Simplify effects on mobile */
-            .card:hover {
-                transform: none;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            }
-
-            .view-btn:hover,
-            .direct-download-btn:hover,
-            .toggle-btn:hover,
-            .close-btn:hover,
-            .download-btn:hover {
-                transform: none;
-            }
-
-            /* Reduce backdrop blur for better mobile performance */
-            .modal {
-                backdrop-filter: blur(4px);
             }
         }
 
@@ -683,7 +640,50 @@
             </div>
         </div>
 
-       
+        <div class="upload-section">
+            <h3 data-si="📋 පිහිටුවීමේ උපදෙස්" data-en="📋 Setup Instructions">📋 පිහිටුවීමේ උපදෙස්</h3>
+            <div class="upload-info">
+                <div class="si-content">
+                    <strong>ඔබේ PDF ගොනු එක් කරන්නේ කෙසේද:</strong><br><br>
+                    1. ඔබේ ව්‍යාපෘති ඩිරෙක්ටරියේ <code>pdfs</code> නම් ෆෝල්ඩරයක් සාදන්න<br>
+                    2. <code>pdfs</code> ඇතුළත ෆෝල්ඩර තුනක් සාදන්න: <code>grade1-4</code>, <code>grade5-7</code>, සහ <code>grade8-9</code><br>
+                    3. ඔබේ PDF ගොනු සුදුසු ශ්‍රේණි ෆෝල්ඩරවල තබන්න<br>
+                    4. ඔබේ PDF වලට මෙසේ නම් කරන්න: <code>Q1-L1.pdf</code>, <code>Q1-L2.pdf</code>, ආදිය<br>
+                    5. HTML හි පාඩම් ශීර්ෂක ඔබේ සැබෑ පාඩම් වලට ගැලපෙන පරිදි යාවත්කාලීන කරන්න<br>
+                    6. සියල්ල ඔබේ GitHub ගබඩාවට තල්ලු කරන්න<br><br>
+                    <strong>ෆෝල්ඩර ව්‍යුහය උදාහරණය:</strong><br>
+                    - index.html<br>
+                    - pdfs/<br>
+                    &nbsp;&nbsp;- grade1-4/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L2.pdf<br>
+                    &nbsp;&nbsp;- grade5-7/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;- grade8-9/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf
+                </div>
+                <div class="en-content" style="display: none;">
+                    <strong>How to add your PDF files:</strong><br><br>
+                    1. Create a folder named <code>pdfs</code> in your project directory<br>
+                    2. Inside <code>pdfs</code>, create three folders: <code>grade1-4</code>, <code>grade5-7</code>, and <code>grade8-9</code><br>
+                    3. Place your PDF files in the appropriate grade folders<br>
+                    4. Name your PDFs like: <code>Q1-L1.pdf</code>, <code>Q1-L2.pdf</code>, etc.<br>
+                    5. Update the lesson titles in the HTML to match your actual lessons<br>
+                    6. Push everything to your GitHub repository<br><br>
+                    <strong>Folder structure example:</strong><br>
+                    - index.html<br>
+                    - pdfs/<br>
+                    &nbsp;&nbsp;- grade1-4/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L2.pdf<br>
+                    &nbsp;&nbsp;- grade5-7/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
+                    &nbsp;&nbsp;- grade8-9/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="pdfModal" class="modal">
         <div class="modal-content">
@@ -747,38 +747,20 @@
             const modalTitle = document.getElementById('modalTitle');
             const loadingOverlay = document.getElementById('loadingOverlay');
             
-            // Construct PDF path with proper URL encoding
+            // Construct PDF path
             currentPdfPath = `pdfs/${grade}/${lesson}.pdf`;
             
             // Show loading overlay
             loadingOverlay.classList.remove('hidden');
             
-            // Clear previous iframe
-            iframe.src = '';
-            
-            // Set new iframe source after a short delay
-            setTimeout(() => {
-                iframe.src = currentPdfPath;
-            }, 100);
+            // Set iframe source
+            iframe.src = currentPdfPath;
             
             // Hide loading when iframe loads
             iframe.onload = function() {
                 setTimeout(() => {
                     loadingOverlay.classList.add('hidden');
                 }, 500);
-            };
-            
-            // Handle errors
-            iframe.onerror = function() {
-                loadingOverlay.innerHTML = `
-                    <div style="text-align: center; color: #dc3545;">
-                        <h3>⚠️ PDF පූරණය කළ නොහැකිය / Cannot Load PDF</h3>
-                        <p style="margin: 20px 0;">PDF ගොනුව සොයාගත නොහැකි විය.</p>
-                        <button class="download-btn" onclick="directDownload('${grade}', '${lesson}')">
-                            ඒ වෙනුවට බාගන්න / Download Instead
-                        </button>
-                    </div>
-                `;
             };
             
             // Set modal title
