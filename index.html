@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>සබත් පාසල් ගුරු සම්පත්</title>
+    
+    <!-- Preload critical font for faster text rendering -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
     <style>
         * {
             margin: 0;
@@ -11,29 +15,77 @@
             box-sizing: border-box;
         }
 
+        /* Simple loading screen */
+        #pageLoader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        #pageLoader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         body {
-            font-family: 'Noto Sans Sinhala', 'Iskoola Pota', 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
-            animation: gradientShift 15s ease infinite;
+            /* Optimize rendering */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        /* Use system fonts on mobile for faster loading */
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                /* Force GPU acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+            }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            animation: fadeIn 0.8s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Remove animation on mobile for faster load */
+        @media (min-width: 769px) {
+            .container {
+                animation: fadeIn 0.8s ease;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
         }
 
         header {
@@ -43,10 +95,21 @@
             padding: 40px 20px;
             position: relative;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
             border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            /* Optimize rendering */
+            will-change: transform;
+        }
+
+        /* Simplified header for mobile */
+        @media (max-width: 768px) {
+            header {
+                backdrop-filter: none;
+                background: rgba(255, 255, 255, 0.15);
+                padding: 25px 15px;
+                margin-bottom: 30px;
+            }
         }
 
         header h1 {
@@ -111,7 +174,6 @@
 
         .card {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 35px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
@@ -120,6 +182,19 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             position: relative;
             overflow: hidden;
+            /* Optimize rendering */
+            will-change: transform;
+        }
+
+        /* Simplified cards for mobile */
+        @media (max-width: 768px) {
+            .card {
+                backdrop-filter: none;
+                background: white;
+                padding: 25px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                transition: none;
+            }
         }
 
         .card::before {
@@ -131,6 +206,13 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.5s;
+        }
+
+        /* Disable shimmer effect on mobile */
+        @media (max-width: 768px) {
+            .card::before {
+                display: none;
+            }
         }
 
         .card:hover::before {
@@ -164,12 +246,18 @@
         .lesson-list {
             display: none;
             margin-top: 20px;
-            animation: slideDown 0.3s ease;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Disable animation on mobile */
+        @media (min-width: 769px) {
+            .lesson-list {
+                animation: slideDown 0.3s ease;
+            }
+            
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
         }
 
         .lesson-list.active {
@@ -497,6 +585,8 @@
 
             .card {
                 padding: 25px;
+                /* Simplify shadows on mobile */
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             }
 
             .modal-content {
@@ -512,11 +602,32 @@
 
             header {
                 padding: 25px 15px;
+                /* Reduce blur on mobile for better performance */
+                backdrop-filter: blur(10px);
             }
 
             .grade-cards {
                 grid-template-columns: 1fr;
                 gap: 20px;
+            }
+
+            /* Simplify effects on mobile */
+            .card:hover {
+                transform: none;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+
+            .view-btn:hover,
+            .direct-download-btn:hover,
+            .toggle-btn:hover,
+            .close-btn:hover,
+            .download-btn:hover {
+                transform: none;
+            }
+
+            /* Reduce backdrop blur for better mobile performance */
+            .modal {
+                backdrop-filter: blur(4px);
             }
         }
 
@@ -541,6 +652,11 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
+
     <div class="container">
         <header>
             <div class="language-switcher">
@@ -559,15 +675,24 @@
                 <div id="grade1-4" class="lesson-list">
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 1" data-en="Quarter 1 - Lesson 1">කාර්තුව 1 - පාඩම 1</span>
-                        <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade1-4', 'Q1-L1')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 2" data-en="Quarter 1 - Lesson 2">කාර්තුව 1 - පාඩම 2</span>
-                        <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade1-4', 'Q1-L2')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 3" data-en="Quarter 1 - Lesson 3">කාර්තුව 1 - පාඩම 3</span>
-                        <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade1-4', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade1-4', 'Q1-L3')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -579,15 +704,24 @@
                 <div id="grade5-7" class="lesson-list">
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 1" data-en="Quarter 1 - Lesson 1">කාර්තුව 1 - පාඩම 1</span>
-                        <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade5-7', 'Q1-L1')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 2" data-en="Quarter 1 - Lesson 2">කාර්තුව 1 - පාඩම 2</span>
-                        <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade5-7', 'Q1-L2')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 3" data-en="Quarter 1 - Lesson 3">කාර්තුව 1 - පාඩම 3</span>
-                        <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade5-7', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade5-7', 'Q1-L3')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -599,64 +733,28 @@
                 <div id="grade8-9" class="lesson-list">
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 1" data-en="Quarter 1 - Lesson 1">කාර්තුව 1 - පාඩම 1</span>
-                        <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L1')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade8-9', 'Q1-L1')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 2" data-en="Quarter 1 - Lesson 2">කාර්තුව 1 - පාඩම 2</span>
-                        <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L2')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade8-9', 'Q1-L2')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                     <div class="lesson-item">
                         <span class="lesson-title" data-si="කාර්තුව 1 - පාඩම 3" data-en="Quarter 1 - Lesson 3">කාර්තුව 1 - පාඩම 3</span>
-                        <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                        <div class="lesson-buttons">
+                            <button class="view-btn" onclick="viewPDF('grade8-9', 'Q1-L3')" data-si="PDF බලන්න" data-en="View PDF">PDF බලන්න</button>
+                            <button class="direct-download-btn" onclick="directDownload('grade8-9', 'Q1-L3')" data-si="බාගන්න" data-en="Download">බාගන්න</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="upload-section">
-            <h3 data-si="📋 පිහිටුවීමේ උපදෙස්" data-en="📋 Setup Instructions">📋 පිහිටුවීමේ උපදෙස්</h3>
-            <div class="upload-info">
-                <div class="si-content">
-                    <strong>ඔබේ PDF ගොනු එක් කරන්නේ කෙසේද:</strong><br><br>
-                    1. ඔබේ ව්‍යාපෘති ඩිරෙක්ටරියේ <code>pdfs</code> නම් ෆෝල්ඩරයක් සාදන්න<br>
-                    2. <code>pdfs</code> ඇතුළත ෆෝල්ඩර තුනක් සාදන්න: <code>grade1-4</code>, <code>grade5-7</code>, සහ <code>grade8-9</code><br>
-                    3. ඔබේ PDF ගොනු සුදුසු ශ්‍රේණි ෆෝල්ඩරවල තබන්න<br>
-                    4. ඔබේ PDF වලට මෙසේ නම් කරන්න: <code>Q1-L1.pdf</code>, <code>Q1-L2.pdf</code>, ආදිය<br>
-                    5. HTML හි පාඩම් ශීර්ෂක ඔබේ සැබෑ පාඩම් වලට ගැලපෙන පරිදි යාවත්කාලීන කරන්න<br>
-                    6. සියල්ල ඔබේ GitHub ගබඩාවට තල්ලු කරන්න<br><br>
-                    <strong>ෆෝල්ඩර ව්‍යුහය උදාහරණය:</strong><br>
-                    - index.html<br>
-                    - pdfs/<br>
-                    &nbsp;&nbsp;- grade1-4/<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L2.pdf<br>
-                    &nbsp;&nbsp;- grade5-7/<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
-                    &nbsp;&nbsp;- grade8-9/<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf
-                </div>
-                <div class="en-content" style="display: none;">
-                    <strong>How to add your PDF files:</strong><br><br>
-                    1. Create a folder named <code>pdfs</code> in your project directory<br>
-                    2. Inside <code>pdfs</code>, create three folders: <code>grade1-4</code>, <code>grade5-7</code>, and <code>grade8-9</code><br>
-                    3. Place your PDF files in the appropriate grade folders<br>
-                    4. Name your PDFs like: <code>Q1-L1.pdf</code>, <code>Q1-L2.pdf</code>, etc.<br>
-                    5. Update the lesson titles in the HTML to match your actual lessons<br>
-                    6. Push everything to your GitHub repository<br><br>
-                    <strong>Folder structure example:</strong><br>
-                    - index.html<br>
-                    - pdfs/<br>
-                    &nbsp;&nbsp;- grade1-4/<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L2.pdf<br>
-                    &nbsp;&nbsp;- grade5-7/<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf<br>
-                    &nbsp;&nbsp;- grade8-9/<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- Q1-L1.pdf
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div id="pdfModal" class="modal">
         <div class="modal-content">
@@ -681,6 +779,13 @@
         let currentLang = 'si';
         let currentPdfPath = '';
 
+        // Hide loader when page is fully loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('pageLoader').classList.add('hidden');
+            }, 300);
+        });
+
         function switchLanguage(lang) {
             currentLang = lang;
             
@@ -700,12 +805,17 @@
             });
             
             // Update instruction content
-            if (lang === 'si') {
-                document.querySelector('.si-content').style.display = 'block';
-                document.querySelector('.en-content').style.display = 'none';
-            } else {
-                document.querySelector('.si-content').style.display = 'none';
-                document.querySelector('.en-content').style.display = 'block';
+            const siContent = document.querySelector('.si-content');
+            const enContent = document.querySelector('.en-content');
+            
+            if (siContent && enContent) {
+                if (lang === 'si') {
+                    siContent.style.display = 'block';
+                    enContent.style.display = 'none';
+                } else {
+                    siContent.style.display = 'none';
+                    enContent.style.display = 'block';
+                }
             }
         }
 
@@ -720,20 +830,38 @@
             const modalTitle = document.getElementById('modalTitle');
             const loadingOverlay = document.getElementById('loadingOverlay');
             
-            // Construct PDF path
+            // Construct PDF path with proper URL encoding
             currentPdfPath = `pdfs/${grade}/${lesson}.pdf`;
             
             // Show loading overlay
             loadingOverlay.classList.remove('hidden');
             
-            // Set iframe source
-            iframe.src = currentPdfPath;
+            // Clear previous iframe
+            iframe.src = '';
+            
+            // Set new iframe source after a short delay
+            setTimeout(() => {
+                iframe.src = currentPdfPath;
+            }, 100);
             
             // Hide loading when iframe loads
             iframe.onload = function() {
                 setTimeout(() => {
                     loadingOverlay.classList.add('hidden');
                 }, 500);
+            };
+            
+            // Handle errors
+            iframe.onerror = function() {
+                loadingOverlay.innerHTML = `
+                    <div style="text-align: center; color: #dc3545;">
+                        <h3>⚠️ PDF පූරණය කළ නොහැකිය / Cannot Load PDF</h3>
+                        <p style="margin: 20px 0;">PDF ගොනුව සොයාගත නොහැකි විය.</p>
+                        <button class="download-btn" onclick="directDownload('${grade}', '${lesson}')">
+                            ඒ වෙනුවට බාගන්න / Download Instead
+                        </button>
+                    </div>
+                `;
             };
             
             // Set modal title
@@ -750,6 +878,16 @@
                 link.download = currentPdfPath.split('/').pop();
                 link.click();
             }
+        }
+
+        function directDownload(grade, lesson) {
+            const pdfPath = `pdfs/${grade}/${lesson}.pdf`;
+            const link = document.createElement('a');
+            link.href = pdfPath;
+            link.download = `${grade}-${lesson}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function closeModal() {
